@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block main_book %}
+    <div class="list_book">
+        <article class="listed_book">
+            <h1 class="h1_list">{{ book.title }}</h1>
+            <img class="img_list" src="{{ book.image }}" alt="{{ book.title }}">
+            <p class="author_list">{{ book.author }}</p>
+            <div class="date_list">Date de publication :{{ book.publishedAt |date ('NOW') }}</div>
+            <br>
+            <a class="a_list" href="{{ path('list_book') }}">Retour</a>
+        </article>
+    </div>
+{% endblock main_book %}

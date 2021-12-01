@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block main_book %}
+        <div class="list_book">
+            <!-- création de ma boucle grace a la méthode twig
+             me permettant d'afficher chaque livre de ma biblio stocker dans ma variable
+             <-- utilisation de la méthode twig pour afin d'acceder au donnée stocker danas ma variables ici le titre -->
+            {% for book in books %}
+                <div class="listed_book">
+                    <h1 class="h1_list">{{ book.title }}</h1>
+                    <img class="img_list" src="{{ book.image }}" alt="{{ book.title }}">
+                    <p class="author_list">{{ book.author }}</p>
+                    <div class="date_list">{{ book.publishedAt |date ('NOW') }}</div>
+                    <a class="a_list" href="{{ path('book',{'id': book.id}) }}">Voir Plus</a>
+                    <br>
+                    <br>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+{% endblock main_book %}

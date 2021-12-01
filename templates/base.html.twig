@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/books.style.css') }}">
+</head>
+<body>
+<header class="header_book">
+    <img class="logo_book" src="https://www.lapiscine.pro/wp-content/uploads/2017/04/LaPiscine_222x40.png" alt="">
+    <ul class="ul_header">
+        <li class="li_header"><a class="a_header" href="{{ path('home') }}">Home</a></li>
+        <li class="li_header"><a class="a_header" href="{{ path('list_book') }}">Book List</a></li>
+        <li class="li_header"><a class="a_header" href="https://remeng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2018/11/30/node_17770/197632/public/2018/11/30/B9717788375Z.1_20181130210633_000%2BG1ECHBUHC.1-0.jpg?itok=ZIGUBrYU1559150238">Suggestion</a></li>
+    </ul>
+</header>
+<main>
+    {% block main_book %}{% endblock main_book %}
+</main>
+<footer class="footer_book">
+    <p class="p_book">Mention Légales</p>
+    <p class="p_book">Politique de Confidentialité</p>
+    <p class="p_book">Préférences En Matière de Cookies</p>
+    <p class="p_book">Recrutement</p>
+</footer>
+</body>
+</html>

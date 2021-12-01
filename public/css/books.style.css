@@ -1,0 +1,138 @@
+body{
+
+    margin: 0;
+    padding: 0;
+}
+
+.header_book{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(244,208,49);
+    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.ul_header{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.li_header{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.a_header{
+    padding-right: 3px;
+    padding-left: 3px;
+    text-decoration: none;
+    font-family: Roboto;
+    font-size: 140%;
+    color: black;
+}
+
+.a_header:hover{
+    color: rgb(244,208,49);
+    background-color: black;
+}
+
+.footer_book{
+    margin-top: 20px    ;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: 4rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(244,208,49) ;
+}
+
+.p_book{
+    padding-right: 7px;
+    padding-left: 7px;
+    cursor: pointer;
+    font-family: Roboto;
+}
+
+.p_book:hover{
+    color: white;
+}
+
+.home_book{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    height: 25rem;
+    background-color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.homed_book{
+
+    height: 90%;
+    width: 30rem;
+}
+
+.img_home{
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    cursor: pointer;
+
+}
+.list_book{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.listed_book{
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    marging-top: 20px;
+    margin-bottom: 20px;
+    border: solid black 2px;
+}
+
+.img_list{
+    width: max-content;
+    object-fit: cover;
+}
+
+.h1_list{
+    font-family: Roboto;
+    font-size: 300%;
+}
+
+.author_list, .date_list, .a_list{
+    font-family: Roboto;
+
+}
+
+.a_list{
+    text-decoration: none;
+    border: solid 3px black;
+    color: black;
+    border-radius: 25px;
+    background-color: rgb(244,208,49);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.a_list:hover{
+    color: rgb(244,208,49);
+    background-color: black;
+
+}
