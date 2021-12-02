@@ -10,18 +10,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class book_controller extends AbstractController
 //initialisation des composants me permettant d'acceder
-//au méthode requise
+//aux méthode requise
 //héritage de ma classe -> acces méthode AC
 {
-
-    /**
-     * initiation de la wild card avec ma route ( partie variable )
-     * @Route ("/book/{id}", name="book")
-     */
-    //je donne a ma variable pour parmatre la wild card
-    public function book($id)
+    //je crée une propriété privée contenant tous mes articles
+    // afin d'éviter les répétition
+    // privé donc accessible unique dans cette class
+    private $books;
+    // je crée la méthode contrsct qui definiera la parametre de la classe lorsque celle ci
+    // sera instancié
+    public function __construct()
     {
-        $books = [
+        //attribution des parametres a ma propriété
+        $this-> $books = [
             1 => [
                 "title" => "Dune",
                 "image" => "https://www.thirdeditions.com/1522-large_default/les-visions-de-dune-dans-les-creux-et-sillons-d-arrakis.jpg",
@@ -59,16 +60,29 @@ class book_controller extends AbstractController
             ]
         ];
 
+    }
+
+    /**
+     * initiation de la wild card avec ma route ( partie variable )
+     * @Route ("/book/{id}", name="book")
+     */
+    //je donne a ma méthode pour parametre la wild card
+    public function book($id)
+    {
         //iniatiation de ma condition afin de verifier si la wild card existe ou non
-        if (!array_key_exists($id, $books))
+        // grace a la méthode $this jaccede a la propiété établie ci dessous
+        //propriété privé uniquement disposnible dans cette classe donc ici
+        if (!array_key_exists($id,$this-> $books))
         {
             //je crée un objet de la classe NotFoundHttpException afin d'afficher une erreur lorsque l'id demandé n'existe pas
             throw new NotFoundHttpException('Page_Not_Found');
         }
         //je profite du parametre de la méthode render me permettant de stocker une variable afin qu'elle soit accessible a Twig
         //grace au paramètre de la méthode render je stock mon tableau dans une variable accessible a Twig
-        return $this->render('book_page.html.twig', ['book' => $books[$id]]);
+        // re appel de ma propriété établi au dessus $this
+        return $this->render('book_page.html.twig', ['book' => $this->$books[$id]]);
 
     }
+
 
 }
