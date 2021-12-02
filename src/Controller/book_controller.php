@@ -22,7 +22,7 @@ class book_controller extends AbstractController
     public function __construct()
     {
         //attribution des parametres a ma propriété
-        $this-> $books = [
+        $this->books = [
             1 => [
                 "title" => "Dune",
                 "image" => "https://www.thirdeditions.com/1522-large_default/les-visions-de-dune-dans-les-creux-et-sillons-d-arrakis.jpg",
@@ -72,7 +72,7 @@ class book_controller extends AbstractController
         //iniatiation de ma condition afin de verifier si la wild card existe ou non
         // grace a la méthode $this jaccede a la propiété établie ci dessous
         //propriété privé uniquement disposnible dans cette classe donc ici
-        if (!array_key_exists($id,$this-> $books))
+        if (!array_key_exists($id,$this->books))
         {
             //je crée un objet de la classe NotFoundHttpException afin d'afficher une erreur lorsque l'id demandé n'existe pas
             throw new NotFoundHttpException('Page_Not_Found');
@@ -80,9 +80,18 @@ class book_controller extends AbstractController
         //je profite du parametre de la méthode render me permettant de stocker une variable afin qu'elle soit accessible a Twig
         //grace au paramètre de la méthode render je stock mon tableau dans une variable accessible a Twig
         // re appel de ma propriété établi au dessus $this
-        return $this->render('book_page.html.twig', ['book' => $this->$books[$id]]);
+        return $this->render('book_page.html.twig', ['book' => $this->books[$id]]);
 
     }
 
+    /**
+     * @Route("/list_book", name="list_book")
+     */
+    public function list_book()
+    {
+        //j u tilise le deuxieme parametre de la méthode AC afin de stocker "ma donnée" dans
+        // une variable accessible a twig
+        return $this->render('list_book.html.twig', ['books' => $this->books ]);
+    }
 
 }
