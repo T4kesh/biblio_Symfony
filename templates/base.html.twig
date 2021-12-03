@@ -5,10 +5,24 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{% block meta_title %}Bibliothèque{% endblock meta_title %}</title>
     <link rel="stylesheet" href="{{ asset('css/books.style.css') }}">
 </head>
 <body>
+        <div id="side-bar">
+            <div class="toggle-btn" id="btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul>
+                <li class="li_sidebar"><a class="a_side_bar" href="{{ path('home') }}">Home</a></li>
+                <li class="li_sidebar"><a class="a_side_bar" href="{{ path('list_book') }}">Books</a></li>
+                <li class="li_sidebar"><a class="a_side_bar" href="https://remeng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2018/11/30/node_17770/197632/public/2018/11/30/B9717788375Z.1_20181130210633_000%2BG1ECHBUHC.1-0.jpg?itok=ZIGUBrYU1559150238">Services</a></li>
+                <li class="li_sidebar"><a class="a_side_bar" href="">Contact</a></li>
+            </ul>
+        </div>
 <header class="header_book">
     <img class="logo_book" src="https://www.lapiscine.pro/wp-content/uploads/2017/04/LaPiscine_222x40.png" alt="">
     <ul class="ul_header">
@@ -25,6 +39,7 @@
     <p class="p_book">Politique de Confidentialité</p>
     <p class="p_book">Préférences En Matière de Cookies</p>
     <p class="p_book">Recrutement</p>
+    <script src="{{ asset('JavaScript/Books.js') }}"></script>
 </footer>
 </body>
 </html>
