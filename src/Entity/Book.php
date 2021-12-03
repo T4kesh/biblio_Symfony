@@ -1,10 +1,11 @@
 <?php
 namespace App\Entity;
-use Doctrine\ORM\Mapping as ORM;
-//composante nécéssaire a l'utilisatio  de méthode de la classe orm
 
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BookRepository;
 /**
  * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=BookRepository::class)
  */
 
 class Book
