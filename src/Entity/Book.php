@@ -42,6 +42,86 @@ class Book
      */
     private $published_at;
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublishedAt()
+    {
+        return $this->published_at;
+    }
+
+    /**
+     * @param mixed $published_at
+     */
+    public function setPublishedAt($published_at): void
+    {
+        $this->published_at = $published_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbPage()
+    {
+        return $this->nb_page;
+    }
+
+    /**
+     * @param mixed $nb_page
+     */
+    public function setNbPage($nb_page): void
+    {
+        $this->nb_page = $nb_page;
+    }
+
 
     /**
      * object relationel mapping

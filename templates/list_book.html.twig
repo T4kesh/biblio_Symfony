@@ -8,9 +8,7 @@
             {% for book in books %}
                 <div class="listed_book">
                     <h1 class="h1_list">{{ book.title }}</h1>
-                    <img class="img_list" src="{{ book.image }}" alt="{{ book.title }}">
                     <p class="author_list">{{ book.author }}</p>
-                    <div class="date_list">{{ book.publishedAt |date ('NOW') }}</div>
                     <a class="a_list" href="{{ path('book',{'id': book.id}) }}">Voir Plus</a>
                     <br>
                     <br>

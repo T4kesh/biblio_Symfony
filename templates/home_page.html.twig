@@ -5,7 +5,8 @@
             {% for book in books %}
                 <div class="home_book">
                     <div class="homed_book">
-                        <img class="img_home" src="{{ book.image }}">
+                        <h1>{{ book.title }}</h1>
+                        <p>{{ book.author }}</p>
                     </div>
                 </div>
             {% endfor %}
