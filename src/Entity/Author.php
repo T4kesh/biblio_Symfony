@@ -27,6 +27,7 @@ class Author
      */
     private $lastName;
 
+
     /**
      * @ORM\Column(type="date", nullable=true)
      */

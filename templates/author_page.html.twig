@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block meta_title %}Author{% endblock meta_title %}
+{% block main_book %}
+    <div class="list_book">
+        <article class="listed_book">
+            <h1 class="h1_list">{{ author.FirstName }}</h1>
+            <p class="author_list">{{ author.LastName }}</p>
+            <br>
+            <a class="a_list" href="{{ path('author_list') }}">Retour</a>
+        </article>
+    </div>
+{% endblock main_book %}

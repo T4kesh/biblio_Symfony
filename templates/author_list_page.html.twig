@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block meta_title %}Author List{% endblock meta_title %}
+{% block main_book %}
+    <div class="list_book">
+        <!-- création de ma boucle grace a la méthode twig
+         me permettant d'afficher chaque livre de ma biblio stocker dans ma variable
+         <-- utilisation de la méthode twig pour afin d'acceder au donnée stocker danas ma variables ici le titre -->
+        {% for author in authors %}
+            <div class="listed_book">
+                <h1 class="h1_list">{{ author.FirstName }}</h1>
+                <p class="author_list">{{ author.LastName }}</p>
+                <a class="a_list" href="{{ path('author',{'id': author.id}) }}">Voir Plus</a>
+                <br>
+                <br>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock main_book %}
