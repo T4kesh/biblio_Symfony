@@ -11,4 +11,14 @@
                 </div>
             {% endfor %}
         </div>
+    <div class="home_book">
+        {% for author in authors %}
+            <div class="home_book">
+                <div class="homed_book">
+                    <h1 class="h1_list">{{ author.FirstName }}</h1>
+                    <p class="author_list">{{ author.LastName }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
  {% endblock main_book %}

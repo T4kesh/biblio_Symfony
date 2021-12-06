@@ -11,7 +11,7 @@ use App\Repository\BookRepository;
 
 
 
-class book_controller extends AbstractController
+class BookController extends AbstractController
 //initialisation des composants me permettant d'acceder
 //aux méthode requise
 //héritage de ma classe -> acces méthode AC
@@ -42,7 +42,7 @@ class book_controller extends AbstractController
      */
 
     //meme procédé que ci dessus
-    public function list_book(BookRepository $bookRepository)
+    public function listBook(BookRepository $bookRepository)
     {
         //j'utilise ici la méthode findall de bookrepository afin d'acceder a tout le contenu de ma table
         $books = $bookRepository->findAll();

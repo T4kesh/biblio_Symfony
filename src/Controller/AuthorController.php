@@ -13,7 +13,7 @@ use App\Repository\BookRepository;
 
 //je récupere mes composant da la librairie Smfony pour acceder a mes classes
 
-class Author_controller extends AbstractController
+class AuthorController extends AbstractController
 {
     /**
      * création de ma route url
@@ -22,7 +22,7 @@ class Author_controller extends AbstractController
 
     // On instancie un nouvel objet de la classe BOOKRepository en donnant
     // pour parmaetre a ma méthode variable et nom de classe
-    public function author_list_page(AuthorRepository $authorRepository)
+    public function authorListPage(AuthorRepository $authorRepository)
     {
         //grace a la méthode de la classe AR je sélectionne tout les auteurs de ma BDD
         // que je stock dans ma variable $authors
@@ -35,7 +35,7 @@ class Author_controller extends AbstractController
      * @Route("/author{id}", name="author")
      */
 
-    public function  author_page($id, AuthorRepository $authorRepository)
+    public function  authorPage($id, AuthorRepository $authorRepository)
     {
         //methode find cette fois ci pour adapter la réponse en fonction de la wild card
         $author = $authorRepository->find($id);
