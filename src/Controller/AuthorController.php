@@ -3,18 +3,35 @@
 namespace App\Controller;
 
 namespace App\Controller;
+use App\Entity\Author;
 use App\Entity\Book;
-use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Repository\AuthorRepository;
-use App\Repository\BookRepository;
+
 
 //je récupere mes composant da la librairie Smfony pour acceder a mes classes
 
 class AuthorController extends AbstractController
 {
+
+    /**
+     * @Route("author/create", name= "author_create")
+     */
+    //Auto Wyre partout sauf entity !Dommage!
+    public function createAuthor()
+    {
+        //instanciation nouvel objet de classe auhtor cette foi ci ( toujours afin d'acceder au méthode de cette classe )
+        $author = new Author();
+
+        $author->setFirstName('Masashi');
+        $author->setLastName('Kishimote');
+        $author->setDeathDate(null);
+
+        dump($author);die;
+        //petit dump pour tester tout ça c'est gratuit
+
+    }
     /**
      * création de ma route url
      * @Route("/author_list", name= "author_list")

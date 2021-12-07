@@ -17,6 +17,25 @@ class BookController extends AbstractController
 //héritage de ma classe -> acces méthode AC
 {
 
+    /**
+     * @Route("book/create", name= "book_create")
+     */
+
+    public function createBook()
+    {
+        //j'instancie mon nouvel objet ( book ) et accede ainsi a toutes les méthodes de la classe c'est lourd
+        $book = new Book();
+        // j'utilise ensuite les méthode de la classe pour définir les caractéristiques de mon objet de classe book
+
+        $book->setTitle('Naruto');
+        $book->setAuthor('Masashi Kishimoto');
+        $book->setPublishedAt(new \DateTime('1999-10-04'));
+        $book->setNbPage('187');
+        //petit dump pour voir si tout c'est bien passé
+
+        dump($book);die;
+
+    }
 
     /**
      * initiation de la wild card avec ma route ( partie variable )
