@@ -5,6 +5,7 @@ namespace App\Controller;
 namespace App\Controller;
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,40 @@ use App\Repository\AuthorRepository;
 
 class AuthorController extends AbstractController
 {
+
+
+    /**
+     * Nouvelle route avec wild card
+     * @Route("author/update/{id}", name= "author_update")
+     */
+
+    //j'auto wyre mes classe afin d'acceder au méthode nécéssaire au fonctionnement de ma méthode authorUpdate
+    // je n'oublie pas de rentrer l'id ( wild card) aussi en parametre de celle-ci
+    public function authorUpdate($id, AuthorRepository $authorRepository, EntityManagerInterface $entityManager)
+    {
+        //je recupere donc grace a la méthode find ici l'auteur correspondant a l'id(la wild card) rentré dans lurl
+        $author_update = $authorRepository->find($id);
+
+        //j'accede au méthode de la classe author repository et procede a mes modification grace a elles
+        $author_update->setFirstName('Jean');
+        $author_update->setLastName('Dujardin');
+
+        // je pré sauvegarde les "modifications grace a la méthode persist de EMI
+        // en lui donnant pour parametre ma variable en cours de traitement
+        $entityManager->persist($author_update);
+        //en j'injecte le tout une fois que j'ai fini mes modifactions grace a la méthode flush
+        // toujours issu de la classe EMI
+        $entityManager->flush();
+        // pas besoin de lui donnée de parmatre vu qu'il se base sur la pré sauvegarde ( persist)
+        // qui elle stock deja ma variable elle a donc déja été "pré enregistré"
+
+
+        // je transmet tout ça a ma 'vue' donc le fichier twig
+        // afin que la requete est une réponse html
+        return$this->render('author_update.html.twig');
+
+
+    }
 
     /**
      * @Route("author/create", name= "author_create")

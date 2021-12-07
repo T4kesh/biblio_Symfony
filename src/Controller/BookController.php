@@ -18,7 +18,34 @@ class BookController extends AbstractController
 //héritage de ma classe -> acces méthode AC
 {
 
+
     /**
+     * Instanciation de la route ainsi que de ma wild card
+     * @Route("book/update/{id}", name= "book_update")
+     */
+
+    //instacation de la classe BookR et EMI grace a l'auto wyre ( c'est lourd )
+    public function bookUpdate($id, EntityManagerInterface $entityManager, BookRepository $bookRepository)
+    {
+        //instanciation de le objet book de classe book repository on accede donc au méthode de la classe
+        //je recupere donc grace a la méthode find le book correspondant a l'id(la wild card) rentré dans lurl
+        $book_update = $bookRepository->find($id);
+        //j'effectue ensuite mes modifications grace au méthode de la classe bookRepository
+        $book_update->setAuthor('Gucci Mane');
+        $book_update->setTitle('Flexin in da hood');
+
+        //la méthode persist instancié en auto wyre plus haut me permet de "pré sauvegarder" mes
+        // modifications en lui donnant pour parametre ma variable book
+       $entityManager->persist($book_update);
+       //que j'envoi ensuiste en BDD grace a la méthode flush
+        $entityManager->flush();
+
+        return$this->render('book_update.html.twig');
+
+    }
+
+    /**
+
      * @Route("book/create", name= "book_create")
      */
 
@@ -43,7 +70,7 @@ class BookController extends AbstractController
         // les objets ( donnée ) que je souhaite save
         $entityManager->flush();
 
-        //je retourne tout ça a ma view donc mon fichier twig grace a la méthode render ( classe AC) 
+        //je retourne tout ça a ma view donc mon fichier twig grace a la méthode render ( classe AC)
         return$this->render('book_create.html.twig');
 
     }
