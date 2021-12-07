@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Book;
+use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,8 @@ class BookController extends AbstractController
      * @Route("book/create", name= "book_create")
      */
 
-    public function createBook()
+    public function createBook(EntityManagerInterface $entityManager)
+        //Auto Wyre de la classe EMI
     {
         //j'instancie mon nouvel objet ( book ) et accede ainsi a toutes les méthodes de la classe c'est lourd
         $book = new Book();
@@ -33,7 +35,16 @@ class BookController extends AbstractController
         $book->setNbPage('187');
         //petit dump pour voir si tout c'est bien passé
 
-        dump($book);die;
+        //Mon objet instancié me permet d'acceder au méthode de la classe EMI
+        // $book  représente ici la donnée que je souhaite injecter en BDD je la met en "stand by" grace
+        // a la méthode persist de classe EMI
+        $entityManager->persist($book);
+        //la méthode flush me permet de lancer mon injection en BDD ( sauvegarde) lorsque j'ai terminé d'instancié
+        // les objets ( donnée ) que je souhaite save
+        $entityManager->flush();
+
+        //je retourne tout ça a ma view donc mon fichier twig grace a la méthode render ( classe AC) 
+        return$this->render('book_create.html.twig');
 
     }
 

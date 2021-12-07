@@ -5,6 +5,7 @@ namespace App\Controller;
 namespace App\Controller;
 use App\Entity\Author;
 use App\Entity\Book;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuthorRepository;
@@ -19,7 +20,9 @@ class AuthorController extends AbstractController
      * @Route("author/create", name= "author_create")
      */
     //Auto Wyre partout sauf entity !Dommage!
-    public function createAuthor()
+    public function createAuthor(EntityManagerInterface $entityManager)
+        //j'instancie grace à l'auto wyre mon inter-classe EntityManager
+        // en rentrant pour parametre a ma variable le nom de l'inter-classe et la variable
     {
         //instanciation nouvel objet de classe auhtor cette foi ci ( toujours afin d'acceder au méthode de cette classe )
         $author = new Author();
@@ -28,8 +31,13 @@ class AuthorController extends AbstractController
         $author->setLastName('Kishimote');
         $author->setDeathDate(null);
 
-        dump($author);die;
-        //petit dump pour tester tout ça c'est gratuit
+        //la méthode persist de l'inter classe EM me permet de prépare l'injection (la sauvegarde) de ma classe en BDD
+        $entityManager->persist($author);
+        //la méthode flush applique ensuite la sauvegarde de tout mes objets en bdd en stand by
+        //de la méthode persist ( je "stock" les objets que je souhaite injecter en bdd puis les injecte quand j'ai terminé
+        //grace a la méthode flush)
+        $entityManager->flush();
+        return$this->render('author_create.html.twig');
 
     }
     /**
