@@ -26,16 +26,6 @@ class Book
      */
     private $title;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-
-    private $author;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-
 
     /**
      * @ORM\Column(type="datetime")
@@ -74,21 +64,7 @@ class Book
         $this->title = $title;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
 
-    /**
-     * @param mixed $author
-     */
-    public function setAuthor($author): void
-    {
-        $this->author = $author;
-    }
 
     /**
      * @return mixed
@@ -129,5 +105,31 @@ class Book
      */
 
     private $nb_page;
+
+    /**
+     * grace a la propiété de ManyToOne je join mon entité book a l'entité auteur
+     * cette fonction me permet de faire executer a symfony la raequete sql normalement nécéssaire a executer
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
+     */
+    private $author;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+
 }
 
