@@ -20,6 +20,34 @@ class BookController extends AbstractController
 
 
     /**
+     * initialisation de ma wil caard afin
+     * @Route("book/remove/{id}", name = "book_remove")
+     */
+    //j'utilise l'autowyre de sy afin d'instancier mes classes et acceder a leur méthode
+    // sans oublier de passer en parametre la wild card a ma méthode
+    public function bookRemove($id, BookRepository $bookRepository, EntityManagerInterface $entityManager)
+    {
+
+        //méthode fin de book repo me permet d'aller chercher la donnée ( livre ) en bdd coresspondant a l'id de la wild card
+        $book_remove = $bookRepository->find($id);
+
+
+        //méthode EMI me permettant la "pré sauvegarde" de ma manouevre ( ici suppréssion )
+        $entityManager->remove($book_remove);
+
+        //une fois les données que je souhaite supprimer j'effectue la suppréssion grace a la méthode flush
+        // qui s'appliquera sur toutes les donées "stocké" précédement dans la méthode remove
+        $entityManager->flush();
+
+
+        return$this->render('book_remove.html.twig');
+
+
+    }
+
+
+
+    /**
      * Instanciation de la route ainsi que de ma wild card
      * @Route("book/update/{id}", name= "book_update")
      */
@@ -29,14 +57,14 @@ class BookController extends AbstractController
     {
         //instanciation de le objet book de classe book repository on accede donc au méthode de la classe
         //je recupere donc grace a la méthode find le book correspondant a l'id(la wild card) rentré dans lurl
-        $book_update = $bookRepository->find($id);
+        $bookUpdate = $bookRepository->find($id);
         //j'effectue ensuite mes modifications grace au méthode de la classe bookRepository
-        $book_update->setAuthor('Gucci Mane');
-        $book_update->setTitle('Flexin in da hood');
+        $bookUpdate->setAuthor('Mohamed Henni');
+        $bookUpdate->setTitle('Les télé sont toutes cassées');
 
         //la méthode persist instancié en auto wyre plus haut me permet de "pré sauvegarder" mes
         // modifications en lui donnant pour parametre ma variable book
-       $entityManager->persist($book_update);
+       $entityManager->persist($bookUpdate);
        //que j'envoi ensuiste en BDD grace a la méthode flush
         $entityManager->flush();
 

@@ -16,7 +16,30 @@ use App\Repository\AuthorRepository;
 
 class AuthorController extends AbstractController
 {
+    /**
+     * création de ma wild card dans ma route
+     * @Route("author/remove/{id}", name= "author_remove")
+     */
 
+    //je passe en parametre l'id de ma wild card ainsi que les classe nécéssaire a ma méthode afin qu'il soit instancié
+    // AUTOMATIQUEMENT grace au goat symfony
+    public function authorRemove($id, AuthorRepository $authorRepository, EntityManagerInterface $entityManager)
+    {
+        // grace a l'auto wyre j'accede donc a la méthode de AR me permettant de chercher l'auteur en BDD corespondant
+        // a l'id (wild card) saisi dans l'url
+        $author_remove = $authorRepository->find($id);
+
+        //méthode remove de EMI qui me permet de delete ( pre-delete) ma donnée ( toujours basé sur l'id de la wild card)
+        $entityManager->remove($author_remove);
+
+        //on flush le tout quand le traitement en terminé grace a la méthode flush de la classe EMI je supprime
+        // les donnée déja 'stocké' dans la méthode remove ( pas besoin de lui repasser en parametre ma variable contenant
+        // ma donnée du coup
+        $entityManager->flush();
+
+        return$this->render('author_remove.html.twig');
+
+    }
 
     /**
      * Nouvelle route avec wild card
@@ -28,15 +51,15 @@ class AuthorController extends AbstractController
     public function authorUpdate($id, AuthorRepository $authorRepository, EntityManagerInterface $entityManager)
     {
         //je recupere donc grace a la méthode find ici l'auteur correspondant a l'id(la wild card) rentré dans lurl
-        $author_update = $authorRepository->find($id);
+        $authorUpdate = $authorRepository->find($id);
 
         //j'accede au méthode de la classe author repository et procede a mes modification grace a elles
-        $author_update->setFirstName('Jean');
-        $author_update->setLastName('Dujardin');
+        $authorUpdate->setFirstName('Jean');
+        $authorUpdate->setLastName('Dujardin');
 
         // je pré sauvegarde les "modifications grace a la méthode persist de EMI
         // en lui donnant pour parametre ma variable en cours de traitement
-        $entityManager->persist($author_update);
+        $entityManager->persist($authorUpdate);
         //en j'injecte le tout une fois que j'ai fini mes modifactions grace a la méthode flush
         // toujours issu de la classe EMI
         $entityManager->flush();
