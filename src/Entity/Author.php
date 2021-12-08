@@ -35,11 +35,6 @@ class Author
      */
     private $deathDate;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Book::class, mappedBy="author")
-     */
-    private $books;
-
 
 
     public function __construct()

@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BookRepository;
 /**
@@ -10,6 +12,13 @@ use App\Repository\BookRepository;
 
 class Book
 {
+
+    /**
+     * object relationel mapping
+     * @ORM\Column(type="integer")
+     */
+    private $nb_page;
+
     /**
      * création des propriété de ma demande de création de table ( ceci est une annotations)
      * grace a orm je donne les parmatres souhaité
@@ -18,6 +27,27 @@ class Book
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      */
+
+    /**
+     * grace a la propiété de ManyToOne je join mon entité book a l'entité auteur
+     * cette fonction me permet de faire executer a symfony la raequete sql normalement nécéssaire a executer
+     * ainsi que de relier ma table book a la colonne author grace aux clés étrangere
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
+     */
+    private $author;
+
+    /**
+     * je join l'entité book a l'entité genre grace a la propriété ManyToOne
+     * via leurs clé étrangère ManyToOne va donc remplacer la requete sql que je devrais normalement effectuer
+     * @ORM\OneToMany(targetEntity=Book::class, mappedBy="genre")
+     */
+    private $books;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=book::class)
+     */
+    private $genre;
+
 
     private $id;
 
@@ -51,6 +81,7 @@ class Book
     /**
      * @return mixed
      */
+
     public function getTitle()
     {
         return $this->title;
@@ -63,8 +94,6 @@ class Book
     {
         $this->title = $title;
     }
-
-
 
     /**
      * @return mixed
@@ -99,24 +128,10 @@ class Book
     }
 
 
-    /**
-     * object relationel mapping
-     * @ORM\Column(type="integer")
-     */
-
-    private $nb_page;
-
-    /**
-     * grace a la propiété de ManyToOne je join mon entité book a l'entité auteur
-     * cette fonction me permet de faire executer a symfony la raequete sql normalement nécéssaire a executer
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
-     */
-    private $author;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
 
     public function getAuthor(): ?string
     {
@@ -126,6 +141,48 @@ class Book
     public function setAuthor(?string $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Book[]
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+    public function addBook(Book $book): self
+    {
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->setGenre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Book $book): self
+    {
+        if ($this->books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getGenre() === $this) {
+                $book->setGenre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getGenre(): ?book
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?book $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }
