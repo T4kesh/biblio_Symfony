@@ -36,8 +36,6 @@ class Author
     private $deathDate;
 
     /**
-     * Jointure sql généré automatiquement par symfo
-     * one to many car un author peut etre rélié a plusiseurs bouqins
      * @ORM\OneToMany(targetEntity=Book::class, mappedBy="Author")
      */
     private $books;
@@ -120,5 +118,5 @@ class Author
         return $this;
     }
 
-
+    
 }

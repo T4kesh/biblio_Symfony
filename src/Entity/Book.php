@@ -44,13 +44,10 @@ class Book
     private $published_at;
 
     /**
-     * Jointure sql généré par symfony
-     * Manytoone car plusiseurr books peuvent etre lié a un seul author
      * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
-     * Faire attention lors de la génération de la jointure en ligne de commande
-     * ( make:entity) a bien nommer ( avec ou sans maj ) les entité et nom de classe!
      */
     private $Author;
+
 
 
     /**
@@ -131,18 +128,19 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?Author
+    public function getAuthor(): ?author
     {
         return $this->Author;
     }
 
-    public function setAuthor(?Author $Author): self
+    public function setAuthor(?author $Author): self
     {
         $this->Author = $Author;
 
         return $this;
     }
-
-
 }
+
+
+
 

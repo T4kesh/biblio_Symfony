@@ -6,6 +6,9 @@
             <h1 class="h1_list">{{ author.FirstName }}</h1>
             <p class="author_list">{{ author.LastName }}</p>
             <br>
+            {% for book in author.books %}
+                <p class="author_list">{{ book.title }}</p>
+            {% endfor %}
             <a class="a_list" href="{{ path('author_list') }}">Retour</a>
         </article>
     </div>
