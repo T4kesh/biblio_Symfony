@@ -27,6 +27,7 @@ class Genre
      */
     private $description;
 
+
     public function getId(): ?int
     {
         return $this->id;

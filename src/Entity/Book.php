@@ -5,6 +5,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BookRepository;
+use phpDocumentor\Reflection\Types\Nullable;
+
 /**
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass=BookRepository::class)
@@ -27,29 +29,8 @@ class Book
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      */
-
-    /**
-     * grace a la propiété de ManyToOne je join mon entité book a l'entité auteur
-     * cette fonction me permet de faire executer a symfony la raequete sql normalement nécéssaire a executer
-     * ainsi que de relier ma table book a la colonne author grace aux clés étrangere
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
-     */
-    private $author;
-
-    /**
-     * je join l'entité book a l'entité genre grace a la propriété ManyToOne
-     * via leurs clé étrangère ManyToOne va donc remplacer la requete sql que je devrais normalement effectuer
-     * @ORM\OneToMany(targetEntity=Book::class, mappedBy="genre")
-     */
-    private $books;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=book::class)
-     */
-    private $genre;
-
-
     private $id;
+
 
     /**
      * @ORM\Column(type="string")
@@ -61,6 +42,16 @@ class Book
      * @ORM\Column(type="datetime")
      */
     private $published_at;
+
+    /**
+     * Jointure sql généré par symfony
+     * Manytoone car plusiseurr books peuvent etre lié a un seul author
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
+     * Faire attention lors de la génération de la jointure en ligne de commande
+     * ( make:entity) a bien nommer ( avec ou sans maj ) les entité et nom de classe!
+     */
+    private $Author;
+
 
     /**
      * @return mixed
@@ -128,53 +119,6 @@ class Book
     }
 
 
-    public function __construct()
-    {
-        $this->books = new ArrayCollection();
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?string $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Book[]
-     */
-    public function getBooks(): Collection
-    {
-        return $this->books;
-    }
-
-    public function addBook(Book $book): self
-    {
-        if (!$this->books->contains($book)) {
-            $this->books[] = $book;
-            $book->setGenre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBook(Book $book): self
-    {
-        if ($this->books->removeElement($book)) {
-            // set the owning side to null (unless already changed)
-            if ($book->getGenre() === $this) {
-                $book->setGenre(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getGenre(): ?book
     {
         return $this->genre;
@@ -183,6 +127,18 @@ class Book
     public function setGenre(?book $genre): self
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->Author;
+    }
+
+    public function setAuthor(?Author $Author): self
+    {
+        $this->Author = $Author;
 
         return $this;
     }
