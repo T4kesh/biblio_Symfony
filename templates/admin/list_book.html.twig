@@ -13,6 +13,9 @@
                     <br>
                     <a class="a_list" href="{{ path('admin_book_remove',{'id': book.id}) }}">Supprimer</a>
                     <br>
+                    {#je crée le lien et le reliant bien grace a path a ma page update twig tout en restant dépandant de lid = wild card ('id': book.id) #}
+                    <a class="a_list" href="{{ path('admin_book_update',{'id': book.id}) }}">Update</a>
+                    <br>
                 </div>
             {% endfor %}
             </div>
