@@ -9,8 +9,9 @@
             <div class="listed_book">
                 <h1 class="h1_list">{{ author.FirstName }}</h1>
                 <p class="author_list">{{ author.LastName }}</p>
-                <a class="a_list" href="{{ path('author',{'id': author.id}) }}">Voir Plus</a>
+                <a class="a_list" href="{{ path('admin_author',{'id': author.id}) }}">Voir Plus</a>
                 <br>
+                <a class="a_list" href="{{ path('admin_author_remove',{'id': author.id}) }}">Supprimer</a>
                 <br>
             </div>
         {% endfor %}

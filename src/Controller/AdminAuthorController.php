@@ -14,11 +14,11 @@ use App\Repository\AuthorRepository;
 
 //je récupere mes composant da la librairie Smfony pour acceder a mes classes
 
-class AuthorController extends AbstractController
+class AdminAuthorController extends AbstractController
 {
     /**
      * création de ma wild card dans ma route
-     * @Route("author/remove/{id}", name= "author_remove")
+     * @Route("admin/author/remove/{id}", name= "admin_author_remove")
      */
 
     //je passe en parametre l'id de ma wild card ainsi que les classe nécéssaire a ma méthode afin qu'il soit instancié
@@ -37,13 +37,13 @@ class AuthorController extends AbstractController
         // ma donnée du coup
         $entityManager->flush();
 
-        return$this->render('author_remove.html.twig');
+        return$this->redirectToRoute('admin_author_list');
 
     }
 
     /**
      * Nouvelle route avec wild card
-     * @Route("author/update/{id}", name= "author_update")
+     * @Route("admin/author/update/{id}", name= "admin_author_update")
      */
 
     //j'auto wyre mes classe afin d'acceder au méthode nécéssaire au fonctionnement de ma méthode authorUpdate
@@ -69,13 +69,13 @@ class AuthorController extends AbstractController
 
         // je transmet tout ça a ma 'vue' donc le fichier twig
         // afin que la requete est une réponse html
-        return$this->render('author_update.html.twig');
+        return$this->render('admin/author_update.html.twig');
 
 
     }
 
     /**
-     * @Route("author/create", name= "author_create")
+     * @Route("admin/author/create", name= "admin_author_create")
      */
     //Auto Wyre partout sauf entity !Dommage!
     public function createAuthor(EntityManagerInterface $entityManager)
@@ -95,12 +95,12 @@ class AuthorController extends AbstractController
         //de la méthode persist ( je "stock" les objets que je souhaite injecter en bdd puis les injecte quand j'ai terminé
         //grace a la méthode flush)
         $entityManager->flush();
-        return$this->render('author_create.html.twig');
+        return$this->render('admin/author_create.html.twig');
 
     }
     /**
      * création de ma route url
-     * @Route("/author_list", name= "author_list")
+     * @Route("admin/author_list", name= "admin_author_list")
      */
 
     // On instancie un nouvel objet de la classe BOOKRepository en donnant
@@ -110,12 +110,12 @@ class AuthorController extends AbstractController
         //grace a la méthode de la classe AR je sélectionne tout les auteurs de ma BDD
         // que je stock dans ma variable $authors
         $authors = $authorRepository->findAll();
-        return$this->render('author_list_page.html.twig', ['authors'=> $authors]);
+        return$this->render('admin/author_list_page.html.twig', ['authors'=> $authors]);
     }
 
     /**
      * initialisation de ma wild card
-     * @Route("/author{id}", name="author")
+     * @Route("admin/author{id}", name="admin_author")
      */
 
     public function  authorPage($id, AuthorRepository $authorRepository)
@@ -124,6 +124,6 @@ class AuthorController extends AbstractController
         $author = $authorRepository->find($id);
 
         //utilisation de la méthode render de la classe AC afin de stocker mes donnée en les rendant accessible a twig
-        return$this->render('author_page.html.twig', ['author'=>$author]);
+        return$this->render('admin/author_page.html.twig', ['author'=>$author]);
     }
 }

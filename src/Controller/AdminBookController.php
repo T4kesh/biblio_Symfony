@@ -143,35 +143,35 @@ class AdminBookController extends AbstractController
     // j'auto wyre la classe requete
     public function bookUpdate($id,Request $request,EntityManagerInterface $entityManager, BookRepository $bookRepository)
     {
-        //instanciation de le objet book de classe book repository on accede donc au méthode de la classe
+        //instanciation de l objet book de classe book repository on accede donc au méthode de la classe
         //je recupere donc grace a la méthode find le book correspondant a l'id(la wild card) rentré dans lurl
         $bookUpdate = $bookRepository->find($id);
 
         //j utilise la méthode  create form AC afin de créer un formulaire
         // en utilisant la classe généré  BookType en ligne de commande : php bin/consolo make:form
         // je n'oublie pas de donner un parametre a la méthode CreateForm l'instance de l'intité book
-        // autrement dire mon new objet généré grace a l'entité book $bookupdate
+        // autrement dire mon new objet généré grace a l'entité book ici $bookupdate
         $bookForm = $this->createForm(BookType::class, $bookUpdate);
 
-        //grace a la methode handleRequest de la classe request je lie, j'associe mon formulaire ( $bookform )
-        // a ma requete , mon formulaire lui meme est associé a l'intité book afin que celui ci adapte ses imputs
-        // au propiété ( ainsi qu'a leur type : int string ect) de celle ci ( entité book )
+        //grace a la methode handleRequest de la classe request j'associe mon formulaire ( $bookform )
+        // a ma requete , mon formulaire lui meme etant associé a l'intité book afin que celui ci adapte ses imputs
+        // au propiétés ainsi qu'a leur type : int string ect, de celle ci ( entité book ).
         $bookForm->handleRequest($request);
 
 
         //je procede a une vérification lors de l'envoi du formulaire ,en php classique if(!empty_POST est remplacé par une méthode
-        // symfony de la classe request is Sumbitted ( assez explicite )
+        // symfony de la classe request is Sumbitted ( assez explicite ) = verifie si mon form est bien rempli
         // is valid prévient le fait d'avoir des données inseré avec un type incompatible a celui des colonne de ma table book en BDD
         // ainsi que les injections sql ( select * from admin ) et limite donc les agissements d'un utilisateur mal intentionné
         if ($bookForm->isSubmitted() && $bookForm->isValid())
         {
             // je réutilise mes méthode persist et flush de la classe EMI pour sauvegarder en BDD les données du formulaire
 
-            //je met bien en parametre a ma méthode le formulaire ( associé a ma requete (lui meme associé a mon enité book précédement) )
+            //je met bien en parametre a ma méthode le formulaire ( associé a ma requete,lui meme associé a mon enité book )
             // faire attention a rentrer le bon parametre dans la méthode
             // ici $book et non $bookForm
             $entityManager->persist($bookUpdate);
-            //flush sauvegarde enfin les données présent dans la méthode persis en bdd
+            //la méthode flush sauvegarde en BDD les données "pré sauvegardé" dans la méthode persist ci dessus
             $entityManager->flush();
         }
 
@@ -180,10 +180,8 @@ class AdminBookController extends AbstractController
         // je transmet donc a ma vue (twig) ma variable contenant mon formulaire, etant un formulaire
         // j'utilise la méthode createView de AC por générer la vue de celui-ci sur mon fichier twig
         // sur mon fichier twig j'utilise la méthode {{ form }} afin d'afficher le formulaire
-        // formulaire qui en se basant sur l'id, permettra d'acceder a la donnée correspondant ( a l id ici le livre ) en bdd
-        // et d'ainsi la mettre a jour en remplissant le champs de celui ci
-        //formulaire qui, lui meme est associé a l'intité book afin que celui ci adapte ses imputs
-        // au propiété ( ainsi qu'a leur type : int string ect) de celle ci ( entité book )
+        // formulaire qui en se basant sur l'id, permettra d'acceder a la donnée correspondant
+        // et d'ainsi la mettre a jour le livre lié a l'id (wild card) en remplissant le champs de celui ci.
         return $this->render('admin/book_update.html.twig', [
             'bookForm' => $bookForm->createView()
         ]);

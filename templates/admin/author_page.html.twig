@@ -9,7 +9,7 @@
             {% for book in author.books %}
                 <p class="author_list">{{ book.title }}</p>
             {% endfor %}
-            <a class="a_list" href="{{ path('author_list') }}">Retour</a>
+            <a class="a_list" href="{{ path('admin_author_list') }}">Retour</a>
         </article>
     </div>
 {% endblock main_book %}
