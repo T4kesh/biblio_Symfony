@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Book;
+use App\Form\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,7 @@ use App\Repository\BookRepository;
 
 
 
-class BookController extends AbstractController
+class AdminBookController extends AbstractController
 //initialisation des composants me permettant d'acceder
 //aux méthode requise
 //héritage de ma classe -> acces méthode AC
@@ -21,7 +22,7 @@ class BookController extends AbstractController
 
     /**
      * initialisation de ma wil caard afin
-     * @Route("admin/book/remove/{id}", name = "book_remove")
+     * @Route("admin/book/remove/{id}", name = "admin_book_remove")
      */
     //j'utilise l'autowyre de sy afin d'instancier mes classes et acceder a leur méthode
     // sans oublier de passer en parametre la wild card a ma méthode
@@ -41,14 +42,40 @@ class BookController extends AbstractController
 
         //méthide de classe AC en faisant attention a donner le nom de la route pour la redirection et non
         // le nom de la page twig
-        return$this->redirectToRoute('list_book');
+        return$this->redirectToRoute('admin_list_book');
 
 
     }
 
     /**
+     * @Route("admin/book/create", name= "admin_book_create")
+     */
+
+    public function createBook(EntityManagerInterface $entityManager)
+        //Auto Wyre de la classe EMI
+    {
+        //j'instancie mon nouvel objet ( book ) et accede ainsi a toutes les méthodes de la classe c'est lourd
+        $book = new Book();
+
+        //j utilise la méthode  create form AC afin de créer un formulaire
+        // en utilisant la classe généré  BookType en ligne de commande : php bin/consolo make:form
+        // je n'oublie pas de donner un parametre a la méthode CreateForm l'instance de l'intité book
+        // autrement dire mon new objet généré grace a l'entité book $bppl
+        $bookForm = $this->createForm(BookType::class, $book);
+
+
+        // je transmet donc a ma vue (twig) ma variable contenant mon formulaire, etant un formulaire
+        // j'utilise la méthode createView de AC por générer la vue de celui-ci sur mon fichier twig
+        // sur mon fichier twig j'utilise la méthode {{ form }} afin d'afficher le formulaire généré
+        return $this->render('admin/book_create.html.twig', [
+            'bookForm' => $bookForm->createView()
+            ]);
+
+    }
+
+    /**
      * initiation de la wild card avec ma route ( partie variable )
-     * @Route ("admin/book/{id}", name="book")
+     * @Route ("admin/book/{id}", name="admin_book")
      */
 
     //j'instancie mon objet en donnant pour parametre ma classe
@@ -61,11 +88,11 @@ class BookController extends AbstractController
         // je donne m=pour parametre a ma méthode find l $id afin que la requete
         // s'adapte toujours en fonction la wild card
         $book = $bookRepository->find($id);
-        return$this->render("book_page.html.twig",['book' => $book]);
+        return$this->render("admin/book_page.html.twig",['book' => $book]);
     }
 
     /**
-     * @Route("admin/list_book", name="list_book")
+     * @Route("admin/list_book", name="admin_list_book")
      */
 
     //meme procédé que ci dessus
@@ -75,7 +102,7 @@ class BookController extends AbstractController
         $books = $bookRepository->findAll();
         //j u tilise le deuxieme parametre de la méthode AC afin de stocker "ma donnée" dans
         // une variable accessible a twig
-        return$this->render("list_book.html.twig", ['books'=> $books]);
+        return$this->render("admin/list_book.html.twig", ['books'=> $books]);
     }
 
 
@@ -88,7 +115,7 @@ class BookController extends AbstractController
 
     /**
      * Instanciation de la route ainsi que de ma wild card
-     * @Route("admin/book/update/{id}", name= "book_update")
+     * @Route("admin/book/update/{id}", name= "admin_book_update")
      */
 
     //instacation de la classe BookR et EMI grace a l'auto wyre ( c'est lourd )
@@ -107,38 +134,7 @@ class BookController extends AbstractController
        //que j'envoi ensuiste en BDD grace a la méthode flush
         $entityManager->flush();
 
-        return$this->render('book_update.html.twig');
-
-    }
-
-    /**
-
-     * @Route("admin/book/create", name= "book_create")
-     */
-
-    public function createBook(EntityManagerInterface $entityManager)
-        //Auto Wyre de la classe EMI
-    {
-        //j'instancie mon nouvel objet ( book ) et accede ainsi a toutes les méthodes de la classe c'est lourd
-        $book = new Book();
-        // j'utilise ensuite les méthode de la classe pour définir les caractéristiques de mon objet de classe book
-
-        $book->setTitle('Naruto');
-        $book->setAuthor('Masashi Kishimoto');
-        $book->setPublishedAt(new \DateTime('1999-10-04'));
-        $book->setNbPage('187');
-        //petit dump pour voir si tout c'est bien passé
-
-        //Mon objet instancié me permet d'acceder au méthode de la classe EMI
-        // $book  représente ici la donnée que je souhaite injecter en BDD je la met en "stand by" grace
-        // a la méthode persist de classe EMI
-        $entityManager->persist($book);
-        //la méthode flush me permet de lancer mon injection en BDD ( sauvegarde) lorsque j'ai terminé d'instancié
-        // les objets ( donnée ) que je souhaite save
-        $entityManager->flush();
-
-        //je retourne tout ça a ma view donc mon fichier twig grace a la méthode render ( classe AC)
-        return$this->render('book_create.html.twig');
+        return$this->render('admin/book_update.html.twig');
 
     }
 

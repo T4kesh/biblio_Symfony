@@ -9,9 +9,9 @@
                     {% if book.author %}
                         <p class="author_list">{{ book.author.FirstName }} {{ book.author.LastName }}</p>
                     {% endif %}
-                    <a class="a_list" href="{{ path('book',{'id': book.id}) }}">Voir Plus</a>
+                    <a class="a_list" href="{{ path('admin_book',{'id': book.id}) }}">Voir Plus</a>
                     <br>
-                    <a class="a_list" href="{{ path('book_remove',{'id': book.id}) }}">Supprimer</a>
+                    <a class="a_list" href="{{ path('admin_book_remove',{'id': book.id}) }}">Supprimer</a>
                     <br>
                 </div>
             {% endfor %}
