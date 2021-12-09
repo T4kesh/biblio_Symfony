@@ -39,13 +39,52 @@ class BookController extends AbstractController
         // qui s'appliquera sur toutes les donées "stocké" précédement dans la méthode remove
         $entityManager->flush();
 
-
-        return$this->render('book_remove.html.twig');
+        //méthide de classe AC en faisant attention a donner le nom de la route pour la redirection et non
+        // le nom de la page twig
+        return$this->redirectToRoute('list_book');
 
 
     }
 
+    /**
+     * initiation de la wild card avec ma route ( partie variable )
+     * @Route ("/book/{id}", name="book")
+     */
 
+    //j'instancie mon objet en donnant pour parametre ma classe
+    // et l'objet instancié ( le nom choisi peut etre modifié ici $bookrepository)
+    public function book($id, BookRepository $bookRepository)
+    {
+        //je stock ma donnée dans la meme variable que précédement afin de pouvoir l'utiliser
+        // dans me différentess méthode
+
+        // je donne m=pour parametre a ma méthode find l $id afin que la requete
+        // s'adapte toujours en fonction la wild card
+        $book = $bookRepository->find($id);
+        return$this->render("book_page.html.twig",['book' => $book]);
+    }
+
+    /**
+     * @Route("/list_book", name="list_book")
+     */
+
+    //meme procédé que ci dessus
+    public function listBook(BookRepository $bookRepository)
+    {
+        //j'utilise ici la méthode findall de bookrepository afin d'acceder a tout le contenu de ma table
+        $books = $bookRepository->findAll();
+        //j u tilise le deuxieme parametre de la méthode AC afin de stocker "ma donnée" dans
+        // une variable accessible a twig
+        return$this->render("list_book.html.twig", ['books'=> $books]);
+    }
+
+
+
+
+
+   ///////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////
 
     /**
      * Instanciation de la route ainsi que de ma wild card
@@ -103,37 +142,5 @@ class BookController extends AbstractController
 
     }
 
-    /**
-     * initiation de la wild card avec ma route ( partie variable )
-     * @Route ("/book/{id}", name="book")
-     */
-
-    //j'instancie mon objet en donnant pour parametre ma classe
-    // et l'objet instancié ( le nom choisi peut etre modifié ici $bookrepository)
-    public function book($id, BookRepository $bookRepository)
-    {
-        //je stock ma donnée dans la meme variable que précédement afin de pouvoir l'utiliser
-        // dans me différentess méthode
-
-        // je donne m=pour parametre a ma méthode find l $id afin que la requete
-        // s'adapte toujours en fonction la wild card
-        $book = $bookRepository->find($id);
-        return$this->render("book_page.html.twig",['book' => $book]);
-    }
-
-
-    /**
-     * @Route("/list_book", name="list_book")
-     */
-
-    //meme procédé que ci dessus
-    public function listBook(BookRepository $bookRepository)
-    {
-        //j'utilise ici la méthode findall de bookrepository afin d'acceder a tout le contenu de ma table
-        $books = $bookRepository->findAll();
-        //j u tilise le deuxieme parametre de la méthode AC afin de stocker "ma donnée" dans
-        // une variable accessible a twig
-        return$this->render("list_book.html.twig", ['books'=> $books]);
-    }
 
 }

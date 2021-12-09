@@ -6,7 +6,7 @@
                 <div class="home_book">
                     <div class="homed_book">
                         <h1 class="h1_list">{{ book.title }}</h1>
-                        <p class="author_list">{{ book.author }}</p>
+                        <p class="author_list">{{ book.author.FirstName }} {{ book.author.LastName }}</p>
                     </div>
                 </div>
             {% endfor %}
