@@ -21,7 +21,7 @@ class BookController extends AbstractController
 
     /**
      * initialisation de ma wil caard afin
-     * @Route("book/remove/{id}", name = "book_remove")
+     * @Route("admin/book/remove/{id}", name = "book_remove")
      */
     //j'utilise l'autowyre de sy afin d'instancier mes classes et acceder a leur méthode
     // sans oublier de passer en parametre la wild card a ma méthode
@@ -48,7 +48,7 @@ class BookController extends AbstractController
 
     /**
      * initiation de la wild card avec ma route ( partie variable )
-     * @Route ("/book/{id}", name="book")
+     * @Route ("admin/book/{id}", name="book")
      */
 
     //j'instancie mon objet en donnant pour parametre ma classe
@@ -65,7 +65,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/list_book", name="list_book")
+     * @Route("admin/list_book", name="list_book")
      */
 
     //meme procédé que ci dessus
@@ -88,7 +88,7 @@ class BookController extends AbstractController
 
     /**
      * Instanciation de la route ainsi que de ma wild card
-     * @Route("book/update/{id}", name= "book_update")
+     * @Route("admin/book/update/{id}", name= "book_update")
      */
 
     //instacation de la classe BookR et EMI grace a l'auto wyre ( c'est lourd )
@@ -113,7 +113,7 @@ class BookController extends AbstractController
 
     /**
 
-     * @Route("book/create", name= "book_create")
+     * @Route("admin/book/create", name= "book_create")
      */
 
     public function createBook(EntityManagerInterface $entityManager)
