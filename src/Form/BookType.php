@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Book;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,9 +14,11 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nb_page')
             ->add('title')
+            ->add('nb_page')
             ->add('published_at')
+            //je crée mon boutton valider en précisant bien sont type car non dépendant des propriété de l'entité book
+            ->add('Valider', SubmitType::class)
         ;
     }
 

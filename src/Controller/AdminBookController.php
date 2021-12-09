@@ -4,11 +4,9 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 
 
@@ -51,7 +49,7 @@ class AdminBookController extends AbstractController
      * @Route("admin/book/create", name= "admin_book_create")
      */
 
-    public function createBook(EntityManagerInterface $entityManager)
+    public function createBook(Request $request, EntityManagerInterface $entityManager)
         //Auto Wyre de la classe EMI
     {
         //j'instancie mon nouvel objet ( book ) et accede ainsi a toutes les méthodes de la classe c'est lourd
@@ -62,6 +60,29 @@ class AdminBookController extends AbstractController
         // je n'oublie pas de donner un parametre a la méthode CreateForm l'instance de l'intité book
         // autrement dire mon new objet généré grace a l'entité book $bppl
         $bookForm = $this->createForm(BookType::class, $book);
+
+        //grace a la methode handleRequest de la classe request je lie, j'associe mon formulaire ( $bookform )
+        // a ma requete , mon formulaire lui meme est associé a l'intité book afin que celui ci adapte ses imputs
+        // au propiété ( ainsi qu'a leur type : int string ect) de celle ci ( entité book )
+        $bookForm->handleRequest($request);
+
+
+        //je procede a une vérification lors de l'envoi du formulaire ,en php classique if(!empty_POST est remplacé par une méthode
+        // symfony de la classe request is Sumbitted ( assez explicite )
+        // is valid prévient le fait d'avoir des données inseré avec un type incompatible a celui des colonne de ma table book en BDD
+        // ainsi que les injections sql ( select * from admin ) et limite donc les agissements d'un utilisateur mal intentionné
+        if ($bookForm->isSubmitted() && $bookForm->isValid())
+        {
+            // je réutilise mes méthode persist et flush de la classe EMI pour sauvegarder en BDD les données du formulaire
+
+            //je met bien en parametre a ma méthode le formulaire ( associé a ma requete (lui meme associé a mon enité book précédement) )
+            // faire attention a rentrer le bon parametre dans la méthode
+            // ici $book et non $bookForm
+            $entityManager->persist($book);
+            //flush sauvegarde enfin les données présent dans la méthode persis en bdd
+            $entityManager->flush();
+        }
+
 
 
         // je transmet donc a ma vue (twig) ma variable contenant mon formulaire, etant un formulaire
