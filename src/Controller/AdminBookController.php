@@ -140,6 +140,7 @@ class AdminBookController extends AbstractController
      */
 
     //instacation de la classe BookR et EMI grace a l'auto wyre ( c'est lourd )
+    // j'auto wyre la classe requete
     public function bookUpdate($id,Request $request,EntityManagerInterface $entityManager, BookRepository $bookRepository)
     {
         //instanciation de le objet book de classe book repository on accede donc au méthode de la classe
@@ -149,7 +150,7 @@ class AdminBookController extends AbstractController
         //j utilise la méthode  create form AC afin de créer un formulaire
         // en utilisant la classe généré  BookType en ligne de commande : php bin/consolo make:form
         // je n'oublie pas de donner un parametre a la méthode CreateForm l'instance de l'intité book
-        // autrement dire mon new objet généré grace a l'entité book $bppl
+        // autrement dire mon new objet généré grace a l'entité book $bookupdate
         $bookForm = $this->createForm(BookType::class, $bookUpdate);
 
         //grace a la methode handleRequest de la classe request je lie, j'associe mon formulaire ( $bookform )
@@ -178,7 +179,11 @@ class AdminBookController extends AbstractController
 
         // je transmet donc a ma vue (twig) ma variable contenant mon formulaire, etant un formulaire
         // j'utilise la méthode createView de AC por générer la vue de celui-ci sur mon fichier twig
-        // sur mon fichier twig j'utilise la méthode {{ form }} afin d'afficher le formulaire généré
+        // sur mon fichier twig j'utilise la méthode {{ form }} afin d'afficher le formulaire
+        // formulaire qui en se basant sur l'id, permettra d'acceder a la donnée correspondant ( a l id ici le livre ) en bdd
+        // et d'ainsi la mettre a jour en remplissant le champs de celui ci
+        //formulaire qui, lui meme est associé a l'intité book afin que celui ci adapte ses imputs
+        // au propiété ( ainsi qu'a leur type : int string ect) de celle ci ( entité book )
         return $this->render('admin/book_update.html.twig', [
             'bookForm' => $bookForm->createView()
         ]);
