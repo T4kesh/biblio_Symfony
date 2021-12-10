@@ -103,6 +103,7 @@ body{
 }
 
 .listed_book{
+
     width: 40rem;
     display: flex;
     flex-direction: column;
@@ -269,8 +270,14 @@ make it thinner, then set it to again wrap around the entire parent element.
     stroke: black;
 }
 
-.error {
-    color: #ba3939;
-    background: #ffe0e0;
-    border: 1px solid #a33a3a;
+.input-group , .mb-3{
+    margin: 0;
+    padding: 0;
+}
+
+.testClass{
+    width: 80%;
+}
+.input-group-text{
+    width: 20%;
 }

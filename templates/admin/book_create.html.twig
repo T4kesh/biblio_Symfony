@@ -1,15 +1,76 @@
 {% extends 'admin/base.html.twig' %}
 {% block meta_title %}Book Added!{% endblock meta_title %}
 {% block main_book %}
+    <link rel="stylesheet" href="{{ asset('css/books.style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
     <div class="list_book">
         <div class="listed_book">
             <br>
-            {{ form_start(bookForm) }}
-                {{ form_row(bookForm) }}
-            {{ form_end(bookForm) }}
-            <br>
-            <a class="a_list" href="{{ path('admin_list_book') }}">Retour</a>
-            <br>
+                {{ form_start(bookForm) }}
+                    <div class="d-flex flex-column">
+                            <div class="input-group mb-3">
+                                {{ form_label(bookForm.title, 'Titre', {
+                                    'label_attr': {
+                                        'class': 'input-group-text'
+                                    }
+                                }) }}
+                                {{ form_widget(bookForm.title, {
+                                    'attr': {
+                                        'class': 'testClass',
+                                        'placeholder': 'Titre...'
+                                    }
+                                }) }}
+                            </div>
+                        <div class="input-group mb-3">
+                            {{ form_label(bookForm.nb_page, 'nb page', {
+                                'label_attr': {
+                                    'class': 'input-group-text',
+                                }
+                            }) }}
+                            {{ form_widget(bookForm.nb_page, {
+                                'attr': {
+                                    'class': 'testClass'
+                                }
+                            }) }}
+                        </div>
+                        <div class="input-group mb-3">
+                            {{ form_label(bookForm.published_at, 'Date de Publication', {
+                                'label_attr': {
+                                    'class': 'input-group-text',
+                                }
+                            }) }}
+                            {{ form_widget(bookForm.published_at, {
+                                'attr': {
+                                    'class': 'testClass'
+                                }
+                            }) }}
+                        </div>
+                        <div class="input-group mb-3">
+                            {{ form_label(bookForm.author, 'Auteur', {
+                                'label_attr': {
+                                    'class': 'input-group-text',
+                                }
+                            }) }}
+                            {{ form_widget(bookForm.author, {
+                                'attr': {
+                                    'class': 'testClass'
+                                }
+                            }) }}
+                        </div>
+                        <div class="input-group mb-3">
+                            {{ form_widget(bookForm.Valider, {
+                                'attr': {
+                                    'class': 'btn btn-outline-warning'
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                {{ form_end(bookForm) }}
+                <br>
+                <a class="a_list" href="{{ path('admin_list_book') }}">Retour</a>
+                <br>
     </div>
         </div>
 {% endblock main_book %}
