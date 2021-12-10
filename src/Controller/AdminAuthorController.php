@@ -5,9 +5,11 @@ namespace App\Controller;
 namespace App\Controller;
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Form\AuthorType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuthorRepository;
 
@@ -48,29 +50,26 @@ class AdminAuthorController extends AbstractController
 
     //j'auto wyre mes classe afin d'acceder au méthode nécéssaire au fonctionnement de ma méthode authorUpdate
     // je n'oublie pas de rentrer l'id ( wild card) aussi en parametre de celle-ci
-    public function authorUpdate($id, AuthorRepository $authorRepository, EntityManagerInterface $entityManager)
+    public function authorUpdate($id, AuthorRepository $authorRepository, EntityManagerInterface $entityManager, Request $request)
     {
         //je recupere donc grace a la méthode find ici l'auteur correspondant a l'id(la wild card) rentré dans lurl
         $authorUpdate = $authorRepository->find($id);
 
-        //j'accede au méthode de la classe author repository et procede a mes modification grace a elles
-        $authorUpdate->setFirstName('Jean');
-        $authorUpdate->setLastName('Dujardin');
+        $authorForm = $this->createForm(AuthorType::class, $authorUpdate);
 
-        // je pré sauvegarde les "modifications grace a la méthode persist de EMI
-        // en lui donnant pour parametre ma variable en cours de traitement
-        $entityManager->persist($authorUpdate);
-        //en j'injecte le tout une fois que j'ai fini mes modifactions grace a la méthode flush
-        // toujours issu de la classe EMI
-        $entityManager->flush();
-        // pas besoin de lui donnée de parmatre vu qu'il se base sur la pré sauvegarde ( persist)
-        // qui elle stock deja ma variable elle a donc déja été "pré enregistré"
+        $authorForm->handleRequest($request);
 
+        if ($authorForm->isSubmitted() && $authorForm->isValid())
+        {
 
-        // je transmet tout ça a ma 'vue' donc le fichier twig
-        // afin que la requete est une réponse html
-        return$this->render('admin/author_update.html.twig');
+            $entityManager->persist($authorUpdate);
+            $entityManager->flush();
 
+        }
+
+        return $this->render('admin/author_update.html.twig',[
+            'authorForm'=>$authorForm->createView()
+        ]);
 
     }
 
@@ -78,24 +77,27 @@ class AdminAuthorController extends AbstractController
      * @Route("admin/author/create", name= "admin_author_create")
      */
     //Auto Wyre partout sauf entity !Dommage!
-    public function createAuthor(EntityManagerInterface $entityManager)
+    public function createAuthor(EntityManagerInterface $entityManager, Request $request)
         //j'instancie grace à l'auto wyre mon inter-classe EntityManager
         // en rentrant pour parametre a ma variable le nom de l'inter-classe et la variable
     {
         //instanciation nouvel objet de classe auhtor cette foi ci ( toujours afin d'acceder au méthode de cette classe )
         $author = new Author();
 
-        $author->setFirstName('Masashi');
-        $author->setLastName('Kishimote');
-        $author->setDeathDate(null);
+        $authorForm = $this->createForm(AuthorType::class, $author);
 
-        //la méthode persist de l'inter classe EM me permet de prépare l'injection (la sauvegarde) de ma classe en BDD
-        $entityManager->persist($author);
-        //la méthode flush applique ensuite la sauvegarde de tout mes objets en bdd en stand by
-        //de la méthode persist ( je "stock" les objets que je souhaite injecter en bdd puis les injecte quand j'ai terminé
-        //grace a la méthode flush)
-        $entityManager->flush();
-        return$this->render('admin/author_create.html.twig');
+        $authorForm->handleRequest($request);
+
+        if ($authorForm->isSubmitted() && $authorForm->isValid())
+        {
+
+            $entityManager->persist($author);
+            $entityManager->flush();
+
+        }
+        return $this->render('admin/author_create.html.twig',[
+            'authorForm'=> $authorForm->createView()
+            ]);
 
     }
     /**
