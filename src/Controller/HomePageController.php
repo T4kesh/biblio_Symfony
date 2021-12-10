@@ -30,7 +30,7 @@ class HomePageController extends AbstractController
         $authors = $authorRepository->findBy(array(),array('id' => 'DESC'),3,0);
 
         //je donne stock un deuxieme tableau afin d'afficher les auteurs correspondant au books
-        return $this->render("home_page.html.twig", ['books'=> $books, 'authors'=>$authors] );
+        return $this->render("admin/home_page.html.twig", ['books'=> $books, 'authors'=>$authors] );
 
 
     }

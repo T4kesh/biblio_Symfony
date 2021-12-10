@@ -1,7 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 {% block meta_title %}Author Updated{% endblock meta_title %}
 {% block main_book %}
-    <br>
-    {{ form(authorForm) }}
-    <br>
+    <div class="list_book">
+        <div class="listed_book">
+            <br>
+            {{ form(authorForm) }}
+            <br>
+            <a class="a_list" href="{{ path('admin_list_book') }}">Retour</a>
+            <br>
+        </div>
+    </div>
 {% endblock main_book %}
