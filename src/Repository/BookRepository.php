@@ -19,32 +19,26 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    // /**
-    //  * @return Book[] Returns an array of Book objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Book
+    public function searchByTitle($word)
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+        // utilisation nde la méthode createQueryBuilder parent de la méthode Service entity repositaory
+        // tout en définissant un allias pour ma table book
+        $queryBuilder= $this->createQueryBuilder('book');
+
+
+        // je demande a doctrine de faire ma requete sql
+        // me permettant de faire un Select sur la table book avec pour paramatre le titre, a condition
+        // que celui ci contienne le contenue de $word ( grace a like a un endroit ou un autre du contenu rentré dans la
+        // recherche / form
+        $query = $queryBuilder->select('book')
+            ->where('book.title LIKE :word')
+            ->setParameter('word', '%'.$word.'%')
+            ->getQuery();
+
+        //on recupere les resultat de la requete sql effectué par doctrine et on la retourne
+        // grace a la methode get result de la classe SER
+        return $query->getResult();
     }
-    */
 }

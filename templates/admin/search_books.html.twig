@@ -1,0 +1,10 @@
+{% extends 'admin/base.html.twig' %}
+{% block meta_title %}Book Search{% endblock meta_title %}
+{% block main_book %}
+    {# ici j'afficher parmi tout les livres existant en bdd le titre du livre lié a la recherche #}
+    {% for book in books %}
+        <div>
+            <h2>{{ book.title }}</h2>
+        </div>
+    {% endfor %}
+{% endblock main_book %}

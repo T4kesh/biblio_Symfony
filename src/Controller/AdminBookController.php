@@ -185,8 +185,29 @@ class AdminBookController extends AbstractController
         return $this->render('admin/book_update.html.twig', [
             'bookForm' => $bookForm->createView()
         ]);
+    }
+    /**
+     * classique création de ma route
+     * @Route("admin/search", name = "admin_search_books")
+     */
 
+    public function searchBooks(Request $request, BookRepository $bookRepository)
+    {
+        // je stock dans $word la recherche de l'utilisateur grace a la classe request
 
+        $word = $request->query->get('q');
+        // le q représente le formulaire ( la ou l'utilisateur rentrer les données qu'on récupere ici
+
+        //la méthode crée dans mon book repositary et ici appélé afin de faire ma requete en bdd
+        // basé sur la recherche de l'utilisateur ( ma méthode et doctrine effectuera la/les requetes sql necessaire a l'obtention
+        // des données de la requetes utilisateur
+        $books = $bookRepository->searchByTitle($word);
+
+        // je retourne la vue de cette requete grace a ma page twig
+        // tout en generant un variable accessible a twig me permettant d'acceder les livre de ma bdd
+        return $this->render('admin/search_books.html.twig', [
+            'books'=>$books
+            ]);
 
     }
 

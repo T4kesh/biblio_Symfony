@@ -53,14 +53,12 @@
             </div>
         </svg>
     </div>
-    <div class="svg-wrapper">
-        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
-            <rect id="shape" height="40" width="150" />
-            <div id="text">
-                <a href=""><span class="spot"></span>Suggestion</a>
-            </div>
-        </svg>
-    </div>
+        <div class="svg-wrapper">
+            <form action="{{ path('admin_search_books') }}">
+                <input type="text" name="q" placeholder="Search...">
+                <input type="submit" value="Chercher">
+            </form>
+        </div>
 </header>
 <main>
     {% block main_book %}{% endblock main_book %}
