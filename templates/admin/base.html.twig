@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block meta_title %}Bibliothèque{% endblock meta_title %}</title>
     <link rel="stylesheet" href="{{ asset('css/books.style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
         <div id="side-bar">
@@ -21,6 +22,8 @@
                 <li class="li_sidebar"><a class="a_side_bar" href="{{ path('admin_author_create') }}">Add Author</a></li>
                 <li class="li_sidebar"><a class="a_side_bar" href="{{ path('admin_list_book') }}">Books</a></li>
                 <li class="li_sidebar"><a class="a_side_bar" href="{{ path('admin_author_list') }}">Authors</a></li>
+                <li class="li_sidebar"><a class="a_side_bar" href="{{ path('login') }}">Login</a></li>
+                <li class="li_sidebar"><a class="a_side_bar" href="{{ path('app_logout') }}">LogOut</a></li>
                 <li class="li_sidebar"><a class="a_side_bar" href="https://remeng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2018/11/30/node_17770/197632/public/2018/11/30/B9717788375Z.1_20181130210633_000%2BG1ECHBUHC.1-0.jpg?itok=ZIGUBrYU1559150238">Services</a></li>
                 <li class="li_sidebar"><a class="a_side_bar" href="">Contact</a></li>
 
@@ -49,14 +52,30 @@
         <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
             <rect id="shape" height="40" width="150" />
             <div id="text">
-                <a href="{{ path('admin_author_list') }}"><span class="spot"></span>Authors</a>
+                <a href="{{ path('login') }}"><span class="spot"></span>Login</a>
+            </div>
+        </svg>
+    </div>
+    <div class="svg-wrapper">
+        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+            <rect id="shape" height="40" width="150" />
+            <div id="text">
+                <a href="{{ path('login') }}"><span class="spot"></span>Login</a>
+            </div>
+        </svg>
+    </div>
+    <div class="svg-wrapper">
+        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+            <rect id="shape" height="40" width="150" />
+            <div id="text">
+                <a href="{{ path('app_logout') }}"><span class="spot"></span>LogOut</a>
             </div>
         </svg>
     </div>
         <div class="svg-wrapper">
             <form action="{{ path('admin_search_books') }}">
-                <input type="text" name="q" placeholder="Search...">
-                <input type="submit" value="Chercher">
+                <input  type="text" name="q" placeholder="Search...">
+                <input  type="submit" value="Chercher">
             </form>
         </div>
 </header>
